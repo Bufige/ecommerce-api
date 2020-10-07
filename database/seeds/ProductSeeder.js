@@ -15,12 +15,22 @@ const Factory = use('Factory')
 const Database = use('Database');
 
 const User = use('App/Models/User');
+const ImageProduct = use('App/Models/ImageProduct');
+const Product = use('App/Models/Product');
 
 const user = {
 	username: 'admin',
 	email: 'admin@admin.com',
 	password: '123456'
 };
+
+const images = [
+	"https://via.placeholder.com/400x400",
+	"https://via.placeholder.com/500x500",
+	"https://via.placeholder.com/600x600",
+	"https://via.placeholder.com/700x700",
+	"https://via.placeholder.com/800x800"
+];
 
 class ProductSeeder {
 	async run() {
@@ -33,7 +43,15 @@ class ProductSeeder {
 		}
 
 	  	const products = await Database.table('products');
-		await Factory.model('App/Models/Product').createMany(20);
+		const tmp = await Factory.model('App/Models/Product').createMany(20);
+
+		for(let product of tmp) {
+			const product_id = product.id;
+
+			for(let image of images)  {
+				const ip = await ImageProduct.create({path: image, product_id: product_id});
+			}
+		}
 	}
 }
 
