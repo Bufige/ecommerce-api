@@ -21,7 +21,8 @@ const Product = use('App/Models/Product');
 const user = {
 	username: 'admin',
 	email: 'admin@admin.com',
-	password: '123456'
+	password: '123456',
+	role: 'admin'
 };
 
 const images = [
