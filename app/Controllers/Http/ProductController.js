@@ -59,7 +59,7 @@ class ProductController {
 			};
 		}
 		catch(e) {
-			return response.json({error: {
+			return response.status(422).json({error: {
 				message: 'Unable to create product.'
 			}});
 		}
@@ -84,7 +84,7 @@ class ProductController {
 			};
 		}
 		catch{
-			return response.json({error: {
+			return response.status(404).json({error: {
 				message: 'Unable to retrieve product.'
 			}});
 		}
@@ -131,7 +131,7 @@ class ProductController {
 			return product;
 		}
 		catch(e) {
-			return response.json({error: {
+			return response.status(422).json({error: {
 				message: 'Unable to update product.'
 			}});
 		}
@@ -154,7 +154,7 @@ class ProductController {
 			return response.json({data : 'Product has been deleted.'})
 		}
 		catch {
-			return response.json({error: {
+			return response.status(422).json({error: {
 				message: 'Unable to delete product.'
 			}});
 		}

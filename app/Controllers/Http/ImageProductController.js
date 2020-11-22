@@ -29,7 +29,7 @@ class ImageProductController {
 			};
 		}	
 		catch(e) {
-			return response.json({error: {
+			return response.status(422).json({error: {
 				message: 'Unable to add/update images.'
 			}});
 		}

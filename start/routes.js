@@ -19,6 +19,7 @@ const Route = use('Route')
 Route.group( () => {
 	Route.post("register", 'UserController.register').validator('RegisterUser');
 	Route.post("login", 'UserController.login').validator('LoginUser');
+	Route.put("update", "UserController.update").middleware('auth').validator('UpdateUser');
 }).prefix('users');
 
 Route.resource('/products','ProductController').middleware(new Map([

@@ -57,7 +57,7 @@ class RateProductController {
 			}
 		}
 		catch {
-			return response.json({error: {
+			return response.status(422).json({error: {
 				message: 'Unable to create product.'
 			}});
 		}

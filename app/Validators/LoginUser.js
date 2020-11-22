@@ -9,7 +9,7 @@ class LoginUser {
 		}
   	}
   	async fails (errorMessages) {
-		return this.ctx.response.send({
+		return this.ctx.response.status(422).send({
 			error:errorMessages[0]
 		});
   	}

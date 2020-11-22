@@ -1,11 +1,11 @@
 'use strict'
 
-class RegisterUser {
+class UpdateUser {
 	get rules() {
 		return {
 			// validation rules
 			username: 'required|min:6',
-			email: 'required|email|unique:users',
+			email: 'required|email',
 			password: 'required|min:6'
 		}
 	}
@@ -16,4 +16,4 @@ class RegisterUser {
 	}
 }
 
-module.exports = RegisterUser
+module.exports = UpdateUser
