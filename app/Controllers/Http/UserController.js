@@ -7,6 +7,7 @@ const User = use("App/Models/User");
 class UserController {
 	async register({request, response, auth}) {
 		const data = request.only(['username', 'email', 'password']);
+		console.log(request.all());
 		try {
 			const user = await User.create(data);
 			const token = await auth.attempt(data.email, data.password);
@@ -20,7 +21,8 @@ class UserController {
 		catch(e) {
 			console.log(e);
 			return response.json({error: {
-				message: 'Unable to create user.'
+				message: 'Unable to create user.',
+				field: 'failed'
 			}});
 		}
 	}
@@ -38,7 +40,8 @@ class UserController {
 		}
 		catch(e) {
 			return response.json({error: {
-				message: 'Unable to login user.'
+				message: 'Unable to login user.',
+				field: 'failed'
 			}});
 		}
 	}
