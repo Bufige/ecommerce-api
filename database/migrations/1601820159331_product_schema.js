@@ -10,7 +10,7 @@ class ProductSchema extends Schema {
 			table.string('name', 128).notNullable();
 			table.text('description', 512);
 			table.decimal('price');
-			table.decimal('discount');
+			table.decimal('discount').default(0);
 
 			table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE');
 			table.timestamps();
