@@ -23,6 +23,7 @@ Route.group(() => {
 	Route.resource('/carousels', 'CarouselController').apiOnly();
 	Route.resource('/orders', 'OrdersController').apiOnly();
 	Route.resource('/rateproducts', 'RateProductController').apiOnly();
+	Route.post('/images', 'ImageProductController.store').middleware('IsOwner:product');
 }).prefix('admin').middleware('IsAdmin').namespace('Admin');
 
 
@@ -38,7 +39,6 @@ Route.group( () => {
 	Route.get('/:id', 'ProductController.show');
 }).prefix('products');
 
-
 Route.group( () => {
 	Route.get('/', 'CarouselController.index').validator('StoreCarousel');
 }).prefix('carousels');
@@ -49,10 +49,11 @@ Route.group( () => {
 	Route.get('/:id', 'OrdersController.show');
 }).prefix('orders');
 
+Route.group( () => {
+	Route.get('/', 'AddressController.index');
+	Route.post('/', 'AddressController.store').validator('StoreAddress');
+}).middleware('auth').prefix('address');
+
 Route.group(() => {
 	Route.post('/', 'RateProductController.store').middleware('auth').validator('StoreRateProduct');
 }).prefix('rateproducts');
-
-Route.group(() => {
-	Route.post('/', 'ImageProductController.store').middleware('IsOwner:product');
-}).prefix('api/images');

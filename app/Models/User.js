@@ -49,6 +49,10 @@ class User extends Model {
 	isAdmin() {
 		return this.role === 'admin';
 	}
+	
+	address() {
+		return this.hasOne('App/Models/Address');
+	}
 }
 
 module.exports = User
