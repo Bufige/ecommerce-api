@@ -10,8 +10,8 @@ class RateProductSchema extends Schema {
 			
 			table.integer('rate').unsigned();
 
-			table.integer('product_id').unsigned().references('id').inTable('products').onUpdate('CASCADE').onDelete('CASCADE');
-			table.integer('user_id').unsigned().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE');
+			table.integer('product_id').unsigned().references('id').inTable('products').onDelete('CASCADE');
+			table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE');
 
 			table.timestamps()
 		})

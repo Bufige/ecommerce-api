@@ -11,10 +11,10 @@ class ProductSchema extends Schema {
 			table.text('description', 512);
 			table.decimal('price');
 			table.decimal('discount');
-			
-			table.integer('user_id').unsigned().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE');
+
+			table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE');
 			table.timestamps();
-			
+
 		})
 	}
 

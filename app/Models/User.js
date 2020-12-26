@@ -45,6 +45,10 @@ class User extends Model {
 	ratings() {
 		return this.hasMany('App/Models/RateProduct');
 	}
+
+	isAdmin() {
+		return this.role === 'admin';
+	}
 }
 
 module.exports = User

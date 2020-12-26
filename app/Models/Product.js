@@ -11,9 +11,13 @@ class Product extends Model {
 	images() {
 		return this.hasMany('App/Models/ImageProduct');
 	}
-
+	
 	ratings() {
 		return this.hasMany('App/Models/RateProduct');
+	}
+	
+	getFullprice() {
+		return this.price + (this.price * this.discount);
 	}
 }
 

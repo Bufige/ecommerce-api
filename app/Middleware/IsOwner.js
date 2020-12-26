@@ -5,6 +5,8 @@
 
 
 const Product = use('App/Models/Product');
+const Order = use('App/Models/Order');
+const RateProduct = use('App/Models/RateProduct');
 
 
 class IsOwner {
@@ -13,27 +15,41 @@ class IsOwner {
 	 * @param {Request} ctx.request
 	 * @param {Function} next
 	 */
-	async handle({ request, response, auth, params}, next, properties) {
+	async handle({ request, response, auth, params }, next, properties) {
 		// call next to advance the request
-		if(properties.includes('product')) {
-			try {
-				const user = await auth.getUser();
-				let {id} = params;
+		try {
+			const user = await auth.getUser();
+			let { id } = params;
 
-				if(!id) {
-					id = request.input('product_id');
-				}
-
-				const product = await Product.find(id);
-				if(product.user_id == user.id || user.role === 'admin') {
-					return await next();
-				}
+			if (!id) {
+				id = request.input('id');
 			}
-			catch(e) {
-				
+			if (this.isOwner(user, properties, id)) {
+				return await next();
 			}
 		}
-		return response.status(401).json({error: 'Unauthorized.'});
+		catch (e) {
+
+		}
+		return response.status(401).json({ error: 'Unauthorized.' });
+	}
+
+	isOwner(user, properties, id) {
+		let model = null;
+		if (properties.includes('product')) {
+			model = Product;
+		}
+		else if (properties.includes('order')) {
+			model = Order;
+		}
+		else if (properties.includes('rateproduct')) {
+			model = RateProduct;
+		}
+		const item = await model.find(id);
+		if (item.user_id === user.id || user.isAdmin()) {
+			return 1;
+		}
+		return 0;
 	}
 }
 

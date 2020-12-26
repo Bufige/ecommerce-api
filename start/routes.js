@@ -16,21 +16,40 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.group( () => {
+// ========== Admin routes ==========
+
+Route.group(() => {
+	Route.resource('/products', 'ProductController').apiOnly();
+	Route.resource('/carousels', 'CarouselController').apiOnly();
+	Route.resource('/orders', 'OrdersController').apiOnly();
+	Route.resource('/rateproducts', 'RateProductController').apiOnly();
+}).prefix('admin').middleware('IsAdmin').namespace('Admin');
+
+
+//========== User routes ==========
+Route.group(() => {
 	Route.post("register", 'UserController.register').validator('RegisterUser');
 	Route.post("login", 'UserController.login').validator('LoginUser');
 	Route.put("update", "UserController.update").middleware('auth').validator('UpdateUser');
 }).prefix('users');
 
-Route.resource('/products','ProductController').middleware(new Map([
-	[['store'], ['auth']],
-	[['update', 'destroy'], ['IsOwner:product']]
-])).validator(new Map([
-	[['store', 'update'], ['StoreProduct']]
-])).apiOnly();
+Route.group( () => {
+	Route.get('/', 'ProductController.index');
+	Route.get('/:id', 'ProductController.show');
+}).prefix('products');
 
 
 Route.group( () => {
+	Route.get('/', 'CarouselController.index').validator('StoreCarousel');
+}).prefix('carousels');
+
+Route.group( () => {
+	Route.get('/', 'OrdersController.index');
+	Route.post('/', 'OrdersController.store').validator('StoreCarousel');
+	Route.get('/:id', 'OrdersController.show');
+}).prefix('orders');
+
+Route.group(() => {
 	Route.post('/', 'RateProductController.store').middleware('auth').validator('StoreRateProduct');
 }).prefix('rateproducts');
 
